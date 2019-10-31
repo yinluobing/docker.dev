@@ -1,6 +1,6 @@
 ARG MONGODB_VERSION
 FROM mongo:${MONGODB_VERSION}
-LABEL maintainer="kaka996.com"
+LABEL maintainer="baidu120.cc"
 
 # set timezome
 ENV TZ=Asia/Shanghai

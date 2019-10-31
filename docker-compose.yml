@@ -185,20 +185,6 @@ services:
     networks:
           - default
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    ports:
-      - "${PHPMYADMIN_HOST_PORT}:80"
-    volumes:
-          - /sessions
-    networks:
-      - default
-    environment:
-      PMA_ARBITRARY: "${PMA_ARBITRARY}"
-      PMA_HOST: "${PMA_HOST}"
-      PMA_PORT: "${PMA_PORT}"
-      TZ: "$TZ"
-
   phpredisadmin:
     image: erikdubbelboer/phpredisadmin:latest
     ports:

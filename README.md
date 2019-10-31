@@ -1,5 +1,5 @@
 # 基于docker的开发者集成环境
-[官方文档](http://blog.kaka996.com/)
+[官方文档](http://blog.baidu120.cc/)
 
 最近更新：
 
@@ -47,7 +47,7 @@
 >9.docker可视化管理
 
 ## 1.安装步骤
-- [官方文档](http://blog.kaka996.com/)
+- [官方文档](http://blog.baidu120.cc/)
 
 ## 附录1：收集的程序员常用网站
-- [程序员常用网站](http://www.kaka996.com/web/dh/dev)
+- [程序员常用网站](http://www.baidu120.cc/web/dh/dev)

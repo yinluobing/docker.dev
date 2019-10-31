@@ -1,6 +1,6 @@
 ARG PHP_VERSION
 FROM php:${PHP_VERSION}-fpm-alpine
-LABEL maintainer="kaka996.com"
+LABEL maintainer="baidu120.cc"
 
 ARG TZ
 ARG PHP_EXTENSIONS
