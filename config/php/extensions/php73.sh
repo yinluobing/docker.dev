@@ -54,6 +54,13 @@ if [ -z "${EXTENSIONS##*,redis,*}" ]; then
     && docker-php-ext-enable redis
 fi
 
+if [ -z "${EXTENSIONS##*,phalcon,*}" ]; then
+    echo "---------- Install phalcon ----------"
+    mkdir phalcon \
+    && tar -xf cphalcon-3.4.5.tgz -C phalcon --strip-components=1 \
+    && ( cd phalcon/build/php7/64bits && phpize && ./configure && make ${MC} && make install ) \
+    && docker-php-ext-enable phalcon
+fi
 
 if [ -z "${EXTENSIONS##*,memcached,*}" ]; then
     echo "---------- Install memcached ----------"
