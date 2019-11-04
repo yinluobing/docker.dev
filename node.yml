@@ -1,0 +1,22 @@
+version: "3"
+services:
+  node:
+    container_name: node
+    build:
+      context: ./config/node/
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+    volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    stdin_open: true
+    tty: true
+    environment:
+      TZ: "$TZ"
+    networks:
+      - default
+
+networks:
+  default:

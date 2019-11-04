@@ -1,0 +1,21 @@
+version: "3"
+services:
+  go:
+    container_name: go
+    build:
+      context: ./config/go/
+      args:
+        GO_VERSION: ${GO_VERSION}
+    volumes:
+      - ${GO_PATH}:/go/:rw
+    stdin_open: true
+    tty: true
+    environment:
+      TZ: "$TZ"
+    networks:
+      - default
+
+networks:
+  default:
+
+
