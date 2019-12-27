@@ -18,6 +18,27 @@ services:
     networks:
       - default
 
+  python3:
+    container_name: python3
+    build:
+      context: ./config/python/
+      args:
+        PYTHON_VERSION: ${PYTHON3_VERSION}
+        TZ: "$TZ"
+    ports:
+      - "${PYTHON3_HOST_PORT}:10000"
+    volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
+      - ${PYTHON_PIP_FILE}:/get-pip.py:rw
+      - ${PYTHON_PIP_INSTALL_REQUIREMENTS}:/requirements.txt:rw
+    restart: always
+    stdin_open: true
+    tty: true
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
+
   php72:
     container_name: php72
     build:

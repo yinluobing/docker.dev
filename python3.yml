@@ -10,6 +10,7 @@ services:
     ports:
       - "${PYTHON3_HOST_PORT}:10000"
     volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
       - ${PYTHON_PIP_FILE}:/get-pip.py:rw
       - ${PYTHON_PIP_INSTALL_REQUIREMENTS}:/requirements.txt:rw
     restart: always

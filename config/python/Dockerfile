@@ -8,6 +8,9 @@ LABEL maintainer="baidu120.cc"
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+COPY ./get-pip.py /tmp/get-pip.py
+COPY ./requirements.txt /tmp/requirements.txt
+
 # 更新Alpine的软件源为国内（清华大学）
 RUN if [ "${ALPINE_REPOSITORIES}" != "" ]; then \
         sed -i "s/dl-cdn.alpinelinux.org/${ALPINE_REPOSITORIES}/g" /etc/apk/repositories; \
@@ -17,11 +20,12 @@ RUN python3
 RUN apk update \
         && apk upgrade \
         && apk add --no-cache bash \
-        && python3 /get-pip.py \
+        && python3 /tmp/get-pip.py \
         && pip install virtualenv \
         && pip install virtualenvwrapper \
-        && pip install -r /requirements.txt \
+        && pip install -r /tmp/requirements.txt \
         && python3 -m pip uninstall -y pip setuptools wheel \
-        && rm -rf /var/cache/apk/*
+        && rm -rf /var/cache/apk/* \
+        && rm -rf /tmp/*
 
 WORKDIR /var/www/html
