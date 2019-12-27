@@ -16,15 +16,13 @@ RUN if [ "${ALPINE_REPOSITORIES}" != "" ]; then \
         sed -i "s/dl-cdn.alpinelinux.org/${ALPINE_REPOSITORIES}/g" /etc/apk/repositories; \
     fi
 
-RUN python3
 RUN apk update \
         && apk upgrade \
         && apk add --no-cache bash \
-        && python3 /tmp/get-pip.py \
+        && python /tmp/get-pip.py \
         && pip install virtualenv \
         && pip install virtualenvwrapper \
         && pip install -r /tmp/requirements.txt \
-        && python3 -m pip uninstall -y pip setuptools wheel \
         && rm -rf /var/cache/apk/* \
         && rm -rf /tmp/*
 
