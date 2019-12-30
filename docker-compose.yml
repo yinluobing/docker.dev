@@ -18,6 +18,22 @@ services:
     networks:
       - default
 
+  ubuntu:
+    container_name: ubuntu
+    image: ubuntu:${UBUNTU_VERSION}
+    ports:
+      - "${UBUNTU_SSH}:22"
+    volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
+      - ${UBUNTU_SOURCE_LIST}:/etc/apt/sources.list:rw
+    restart: always
+    stdin_open: true
+    tty: true
+    environment:
+      TZ: "$TZ"
+    networks:
+      - default
+
   python3:
     container_name: python3
     build:
