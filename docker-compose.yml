@@ -31,6 +31,8 @@ services:
     tty: true
     environment:
       TZ: "$TZ"
+    cap_add:
+      - SYS_PTRACE
     networks:
       - default
 
