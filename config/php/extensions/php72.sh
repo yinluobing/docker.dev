@@ -15,11 +15,9 @@ if [ -z "${EXTENSIONS##*,mcrypt,*}" ]; then
     echo "---------- mcrypt was REMOVED from PHP 7.2.0 ----------"
 fi
 
-
 if [ -z "${EXTENSIONS##*,mysql,*}" ]; then
     echo "---------- mysql was REMOVED from PHP 7.0.0 ----------"
 fi
-
 
 if [ -z "${EXTENSIONS##*,sodium,*}" ]; then
     echo "---------- Install sodium ----------"
@@ -69,7 +67,6 @@ if [ -z "${EXTENSIONS##*,memcached,*}" ]; then
     docker-php-ext-enable memcached
 fi
 
-
 if [ -z "${EXTENSIONS##*,xdebug,*}" ]; then
     echo "---------- Install xdebug ----------"
     mkdir xdebug \
@@ -78,13 +75,20 @@ if [ -z "${EXTENSIONS##*,xdebug,*}" ]; then
     && docker-php-ext-enable xdebug
 fi
 
-
 if [ -z "${EXTENSIONS##*,swoole,*}" ]; then
     echo "---------- Install swoole ----------"
     mkdir swoole \
-    && tar -xf swoole-4.4.3.tgz -C swoole --strip-components=1 \
+    && tar -xf swoole-4.4.13.tar.gz -C swoole --strip-components=1 \
     && ( cd swoole && phpize && ./configure --enable-openssl && make ${MC} && make install ) \
     && docker-php-ext-enable swoole
+fi
+
+if [ -z "${EXTENSIONS##*,swoole-ext-async,*}" ]; then
+    echo "---------- Install swoole-ext-async ----------"
+    mkdir swoole-ext-async-4.4.13 \
+    && tar -xf swoole-ext-async-4.4.13.tar.gz -C swoole-ext-async-4.4.13 --strip-components=1 \
+    && ( cd swoole-ext-async-4.4.13 && phpize && ./configure && make ${MC} && make install ) \
+    && docker-php-ext-enable swoole_async
 fi
 
 if [ -z "${EXTENSIONS##*,pdo_sqlsrv,*}" ]; then
@@ -100,3 +104,8 @@ if [ -z "${EXTENSIONS##*,sqlsrv,*}" ]; then
     printf "\n" | pecl install sqlsrv
     docker-php-ext-enable sqlsrv
 fi
+
+
+#    mkdir swoole-ext-async-4.4.13/ext \
+#    mkdir swoole-ext-async-4.4.13/ext/swoole \
+#    && tar -xf swoole-4.4.13.tar.gz -C swoole-ext-async-4.4.13/ext/swoole --strip-components=1 \
