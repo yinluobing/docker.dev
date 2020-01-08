@@ -22,10 +22,11 @@ ENV EXTENSIONS=",${PHP_EXTENSIONS},"
 ENV MC="-j$(nproc)"
 
 RUN export MC="-j$(nproc)" \
+    && chmod +x ffmpeg.sh \
     && chmod +x install.sh \
     && chmod +x "${MORE_EXTENSION_INSTALLER}" \
-    && sh install.sh \
     && sh ffmpeg.sh \
+    && sh install.sh \
     && sh "${MORE_EXTENSION_INSTALLER}" \
     && rm -rf /tmp/extensions
 
