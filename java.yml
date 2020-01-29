@@ -1,0 +1,25 @@
+version: "3"
+services:
+  java14:
+    container_name: java14
+    build:
+      context: ./config/java/
+      args:
+        JAVA_VERSION: ${JAVA14_VERSION}
+        ALPINE_REPOSITORIES: ${ALPINE_REPOSITORIES}
+        TZ: "$TZ"
+    ports:
+      - "${JAVA14_HOST_PORT}:9000"
+    volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
+      - ${JAVA14_LOG_DIR}:/var/log/java
+#    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
+
+networks:
+  default:
+
+
