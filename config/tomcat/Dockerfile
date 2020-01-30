@@ -1,5 +1,5 @@
-ARG JAVA_VERSION
-FROM openjdk:${JAVA_VERSION}-jdk-alpine
+ARG TOMCAT_VERSION
+FROM openjdk:${TOMCAT_VERSION}-alpine
 LABEL maintainer="baidu120.cc"
 
 ARG TZ

@@ -1,0 +1,16 @@
+<!--liangxifeng 2018.1.6 该service实例使用8081端口访问对应网站目录是:/var/www/html/localhost-->
+<Service name="Catalina">
+    <Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443"/>
+    <Engine defaultHost="localhost" name="Catalina">
+
+        <Realm className="org.apache.catalina.realm.LockOutRealm">
+            <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
+        </Realm>
+
+        <Host appBase="localhost" autoDeploy="true" name="localhost" unpackWARs="true">
+            <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t _%r_ %s %b" prefix="localhost_access_log." suffix=".txt"/>
+            <Context docBase="spring-mvc-springAndspringMVC" path="/spring-mvc-springAndspringMVC" reloadable="true" source="org.eclipse.jst.jee.server:spring-mvc-springAndspringMVC"/>
+            <Context docBase="/var/www/html/localhost" path="/1.jsp" reloadable="true" source="org.eclipse.jst.jee.server:test-one"/>
+        </Host>
+    </Engine>
+</Service>

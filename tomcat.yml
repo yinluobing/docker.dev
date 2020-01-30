@@ -1,18 +1,19 @@
 version: "3"
 services:
-  java14:
-    container_name: java14
+  tomcat:
+    container_name: tomcat
     build:
-      context: ./config/java/
+      context: ./config/tomcat/
       args:
-        JAVA_VERSION: ${JAVA14_VERSION}
+        TOMCAT_VERSION: ${TOMCAT8_VERSION}
         ALPINE_REPOSITORIES: ${ALPINE_REPOSITORIES}
         TZ: "$TZ"
     ports:
-      - "${JAVA14_HOST_PORT}:${JAVA14_HOST_PORT}" # 11000
+      - "${TOMCAT8_HOST_PORT}:${TOMCAT8_HOST_PORT}" # 11001
     volumes:
       - ${SOURCE_DIR}:/var/www/html/:rw
-      - ${JAVA14_LOG_DIR}:/var/log/java
+      - ${TOMCAT8_CONF_FILE}:/usr/local/tomcat/conf/server.xml  #映射 tomcat的配置文件到容器里
+      - ${TOMCAT8_LOG_DIR}:/usr/local/tomcat/logs/
 #    restart: always
     command:
       - /bin/sh

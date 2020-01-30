@@ -86,7 +86,7 @@ services:
         ALPINE_REPOSITORIES: ${ALPINE_REPOSITORIES}
         TZ: "$TZ"
     ports:
-      - "${JAVA14_HOST_PORT}:${JAVA14_HOST_PORT}"
+      - "${JAVA14_HOST_PORT}:${JAVA14_HOST_PORT}" # 11000
     depends_on:
       - mysql
       - redis
@@ -95,8 +95,40 @@ services:
       - ${SOURCE_DIR}:/var/www/html/:rw
       - ${JAVA14_LOG_DIR}:/var/log/java
     #    restart: always
+    command:
+      - /bin/sh
     cap_add:
       - SYS_PTRACE
+    stdin_open: true
+    tty: true
+    networks:
+      - default
+
+  tomcat:
+    container_name: tomcat
+    build:
+      context: ./config/tomcat/
+      args:
+        TOMCAT_VERSION: ${TOMCAT8_VERSION}
+        ALPINE_REPOSITORIES: ${ALPINE_REPOSITORIES}
+        TZ: "$TZ"
+    ports:
+      - "${TOMCAT8_HOST_PORT}:${TOMCAT8_HOST_PORT}" # 11001
+    depends_on:
+      - mysql
+      - redis
+      - nginx
+    volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
+      - ${TOMCAT8_CONF_FILE}:/usr/local/tomcat/conf/server.xml  #映射 tomcat的配置文件到容器里
+      - ${TOMCAT8_LOG_DIR}:/usr/local/tomcat/logs/
+    #    restart: always
+    command:
+      - /bin/sh
+    cap_add:
+      - SYS_PTRACE
+    stdin_open: true
+    tty: true
     networks:
       - default
 
