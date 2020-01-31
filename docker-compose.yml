@@ -48,6 +48,42 @@ services:
     networks:
       - default
 
+  mongodb:
+    container_name: mongodb
+    image: mongo:${MONGODB_VERSION}
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${MONGODB_INITDB_ROOT_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_INITDB_ROOT_PASSWORD}"
+      TZ: "$TZ"
+    volumes:
+      - ${MONGODB_DATA_DIR}:/data/db:rw
+      - ${MONGODB_DATA_DIR}/mongo_key:/mongo:rw
+    ports:
+      - "${MONGODB_HOST_PORT}:27017"
+    networks:
+      - default
+    command:
+      --auth
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:${RABBITMQ_VERSION}
+    ports:
+      - "${RABBITMQ_HOST_PORT_1}:5672"
+      - "${RABBITMQ_HOST_PORT_2}:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER}"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS}"
+      TZ: "$TZ"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+#    restart: always
+    networks:
+      - default
+
   php72:
     container_name: php72
     build:
