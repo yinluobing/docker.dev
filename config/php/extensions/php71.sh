@@ -82,9 +82,17 @@ fi
 if [ -z "${EXTENSIONS##*,swoole,*}" ]; then
     echo "---------- Install swoole ----------"
     mkdir swoole \
-    && tar -xf swoole-4.4.3.tgz -C swoole --strip-components=1 \
+    && tar -xvf swoole-4.4.13.tgz -C swoole --strip-components=1 \
     && ( cd swoole && phpize && ./configure --enable-openssl && make ${MC} && make install ) \
     && docker-php-ext-enable swoole
+fi
+
+if [ -z "${EXTENSIONS##*,swoole-ext-async,*}" ]; then
+    echo "---------- Install swoole-ext-async ----------"
+    mkdir swoole-ext-async-4.4.13 \
+    && tar -xvf swoole-ext-async-4.4.13.tgz -C swoole-ext-async-4.4.13 --strip-components=1 \
+    && ( cd swoole-ext-async-4.4.13 && phpize && ./configure && make ${MC} && make install ) \
+    && docker-php-ext-enable swoole_async
 fi
 
 if [ -z "${EXTENSIONS##*,pdo_sqlsrv,*}" ]; then
