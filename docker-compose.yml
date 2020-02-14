@@ -203,13 +203,21 @@ services:
 
   ubuntu:
     container_name: ubuntu
-    image: ubuntu:${UBUNTU_VERSION}
+    build:
+      context: ./config/ubuntu/
+      args:
+        UBUNTU_VERSION: ${UBUNTU_VERSION}
     ports:
       - "${UBUNTU_SSH}:22"
     volumes:
       - ${SOURCE_DIR}:/var/www/html/:rw
-      - ${UBUNTU_SOURCE_LIST}:/etc/apt/sources.list:rw
+#      - ${UBUNTU_SOURCE_LIST}:/etc/apt/sources.list:rw
     #    restart: always
+#    command: ["/bin/bash","/usr/sbin/sshd", "-D"]
+#      - /bin/bash
+#      -   -c
+#      - |
+#        /start.sh
     stdin_open: true
     tty: true
     environment:
@@ -235,6 +243,27 @@ services:
     tty: true
     cap_add:
       - SYS_PTRACE
+    networks:
+      - default
+
+  mssql:
+    image: microsoft/mssql-server-linux:2017-latest
+    ports:
+      - "1433:1433"
+    container_name: mssql
+    volumes:
+      - ./data/mssql:/var/opt/mssql
+      - ${UBUNTU_SOURCE_LIST}:/etc/apt/sources.list:rw
+    privileged: true
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=a12345678.
+      - TZ=Asia/Shanghai
+    #    restart: always
+    cap_add:
+      - SYS_PTRACE
+    stdin_open: true
+    tty: true
     networks:
       - default
 

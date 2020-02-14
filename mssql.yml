@@ -1,0 +1,27 @@
+version: "3"
+services:
+  mssql:
+    image: microsoft/mssql-server-linux:2017-latest
+    ports:
+      - "1433:1433"
+    container_name: mssql
+    volumes:
+      - ./data/mssql:/var/opt/mssql
+      - ${UBUNTU_SOURCE_LIST}:/etc/apt/sources.list:rw
+    privileged: true
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=a12345678.
+      - TZ=Asia/Shanghai
+#    restart: always
+    cap_add:
+      - SYS_PTRACE
+    stdin_open: true
+    tty: true
+    networks:
+      - default
+
+networks:
+  default:
+
+
