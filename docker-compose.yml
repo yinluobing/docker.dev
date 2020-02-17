@@ -253,10 +253,11 @@ services:
     container_name: mssql
     volumes:
       - ./data/mssql:/var/opt/mssql
-      - ${UBUNTU_SOURCE_LIST}:/etc/apt/sources.list:rw
+#      - ${UBUNTU_SOURCE_LIST}:/etc/apt/sources.list:rw
     privileged: true
     environment:
       - ACCEPT_EULA=Y
+      - MSSQL_COLLATION=Chinese_PRC_CI_AS
       - SA_PASSWORD=a12345678.
       - TZ=Asia/Shanghai
     #    restart: always
